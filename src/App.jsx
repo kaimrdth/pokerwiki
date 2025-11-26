@@ -307,11 +307,11 @@ const HandRankings = () => {
         {hands.map((hand, idx) => (
           <div 
             key={idx} 
-            className="flex items-center justify-between px-5 py-3 border-b border-zinc-800/50 last:border-0 hover:bg-zinc-800/30 transition-colors"
+            className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-5 py-3 border-b border-zinc-800/50 last:border-0 hover:bg-zinc-800/30 transition-colors"
           >
-            <span className="text-xs md:text-sm font-bold text-zinc-400 tracking-wider w-32 md:w-40 flex-shrink-0">{hand.title}</span>
-            <div className="flex gap-1">
-              {hand.cards.map((c, i) => <Card key={i} rank={c.r} suit={c.s} size="sm" />)}
+            <span className="text-xs md:text-sm font-bold text-zinc-400 tracking-wider sm:w-40 flex-shrink-0">{hand.title}</span>
+            <div className="flex gap-1 flex-wrap">
+              {hand.cards.map((c, i) => <Card key={i} rank={c.r} suit={c.s} size="xs" />)}
             </div>
           </div>
         ))}
