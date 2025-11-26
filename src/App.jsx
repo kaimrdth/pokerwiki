@@ -206,7 +206,7 @@ const Term = ({ label }) => {
   return (
     <span className="relative inline-flex items-center group">
       <span className="underline decoration-dotted cursor-help">{label}</span>
-      <span className="pointer-events-none absolute left-1/2 -translate-x-1/2 -top-7 whitespace-nowrap text-[11px] bg-black/80 text-white px-2 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-30">
+      <span className="pointer-events-none fixed left-1/2 -translate-x-1/2 -top-10 whitespace-nowrap text-[11px] bg-black/90 text-white px-2 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-[9999]">
         {text}
       </span>
     </span>
