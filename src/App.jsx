@@ -800,9 +800,9 @@ const TabIntro = ({ title, items }) => (
 
 const CheatSheet = () => {
   const handExamples = [
-    { label: 'Trash', hand: [{r:'8',s:'♠'}, {r:'3',s:'♦'}], note: 'Fold: off-suit, far apart, weak kicker.' },
-    { label: 'Playable', hand: [{r:'J',s:'♥'}, {r:'T',s:'♥'}], note: 'Raise late: suited and next-door ranks can make strong straights/flushes.' },
-    { label: 'Strong', hand: [{r:'A',s:'♠'}, {r:'K',s:'♠'}], note: 'Raise big: two top cards, suited, top kicker.' },
+    { label: 'Trash', hand: [{r:'8',s:'♠'}, {r:'3',s:'♦'}], note: 'Fold: off-suit, far apart, weak kicker' },
+    { label: 'Playable', hand: [{r:'J',s:'♥'}, {r:'T',s:'♥'}], note: 'Raise late: suited and next-door ranks can make strong straights/flushes' },
+    { label: 'Strong', hand: [{r:'A',s:'♠'}, {r:'K',s:'♠'}], note: 'Raise big: two top cards, suited, top kicker' },
   ];
 
   const cards = [
