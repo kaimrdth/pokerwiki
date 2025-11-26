@@ -302,7 +302,7 @@ const HandRankings = () => {
   ];
 
   return (
-    <div className="max-w-md mx-auto">
+    <div className="max-w-md w-full mx-auto">
       <div className="bg-zinc-900 border border-zinc-800 rounded-xl shadow-sm">
         {hands.map((hand, idx) => (
           <div 
@@ -851,7 +851,7 @@ const CheatSheet = () => {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto space-y-4 md:space-y-6">
+    <div className="max-w-6xl mx-auto space-y-4 md:space-y-6 w-full">
       {cards.map((card, idx) => (
         <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 md:p-5 shadow-sm relative select-none transition-transform duration-200 hover:-translate-y-1 active:scale-[0.995] hover:border-emerald-700/70">
           <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} pointer-events-none`} />
@@ -918,7 +918,7 @@ const App = () => {
   const activeItem = navItems.find(i => i.id === activeTab);
 
   return (
-    <div className="fixed inset-0 bg-zinc-950 font-sans text-zinc-100 flex flex-col md:flex-row selection:bg-emerald-500/30">
+    <div className="fixed inset-0 bg-zinc-950 font-sans text-zinc-100 flex flex-col md:flex-row selection:bg-emerald-500/30 overflow-x-hidden">
       
       {/* Mobile Header */}
       <div className="md:hidden bg-zinc-900 border-b border-zinc-800 text-white p-4 flex items-center justify-between z-50">
@@ -963,7 +963,7 @@ const App = () => {
       </div>
 
       {/* Main Content */}
-      <main ref={mainContentRef} className="flex-1 overflow-y-auto w-full bg-zinc-950 scroll-smooth md:ml-64">
+      <main ref={mainContentRef} className="flex-1 overflow-y-auto overflow-x-hidden w-full bg-zinc-950 scroll-smooth md:ml-64">
         <div className="p-6 md:p-12 max-w-6xl mx-auto w-full min-h-full flex flex-col">
           <header className="mb-10">
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">{activeItem?.label}</h1>
