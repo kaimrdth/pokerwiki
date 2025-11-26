@@ -249,7 +249,7 @@ const HandRankings = () => {
 
   return (
     <div className="max-w-md mx-auto">
-      <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden shadow-sm">
+      <div className="bg-zinc-900 border border-zinc-800 rounded-xl shadow-sm">
         {hands.map((hand, idx) => (
           <div 
             key={idx} 
@@ -370,7 +370,7 @@ const GameSimulator = () => {
 
   return (
     <div className="flex flex-col gap-6 max-w-2xl mx-auto">
-      <div className="bg-zinc-900 rounded-xl p-6 md:p-8 flex flex-col items-center relative overflow-hidden shadow-xl border border-zinc-800 min-h-[400px]">
+      <div className="bg-zinc-900 rounded-xl p-6 md:p-8 flex flex-col items-center relative shadow-xl border border-zinc-800 min-h-[400px]">
         
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#27272a_0%,_#09090b_100%)] opacity-50"></div>
         
@@ -602,7 +602,7 @@ const AdvancedGTO = () => {
 };
 
 const BettingActions = () => (
-  <div className="max-w-2xl mx-auto bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden divide-y divide-zinc-800">
+  <div className="max-w-2xl mx-auto bg-zinc-900 border border-zinc-800 rounded-xl divide-y divide-zinc-800">
     {[
       { label: 'CHECK', color: 'bg-zinc-500', desc: "Pass action to next player. Allowed if no bets placed." },
       { label: 'BET', color: 'bg-emerald-500', desc: "First to put money in the pot this round." },
@@ -686,7 +686,7 @@ const DeepDive = () => {
   return (
     <div className="max-w-5xl mx-auto space-y-4 md:space-y-6">
       {cards.map((card, idx) => (
-        <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 md:p-6 shadow-sm relative overflow-hidden select-none cursor-default transition-transform duration-200 hover:-translate-y-1 hover:border-emerald-700/70">
+        <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 md:p-6 shadow-sm relative select-none cursor-default transition-transform duration-200 hover:-translate-y-1 hover:border-emerald-700/70">
           <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} pointer-events-none`} />
           <div className="relative flex flex-col md:flex-row gap-5 md:gap-8">
             <div className="flex-1">
@@ -731,7 +731,7 @@ const TabIntro = ({ title, items }) => (
       {items.map((item, idx) => (
         <div 
           key={idx} 
-          className="group relative overflow-hidden border border-zinc-800 rounded-lg bg-zinc-950/60 p-3 transition-transform duration-200 hover:-translate-y-1 hover:border-emerald-700 select-none cursor-default"
+          className="group relative border border-zinc-800 rounded-lg bg-zinc-950/60 p-3 transition-transform duration-200 hover:-translate-y-1 hover:border-emerald-700 select-none cursor-default"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           <div className="relative">
@@ -799,7 +799,7 @@ const CheatSheet = () => {
   return (
     <div className="max-w-6xl mx-auto space-y-4 md:space-y-6">
       {cards.map((card, idx) => (
-        <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 md:p-5 shadow-sm relative overflow-hidden select-none transition-transform duration-200 hover:-translate-y-1 hover:border-emerald-700/70">
+        <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 md:p-5 shadow-sm relative select-none transition-transform duration-200 hover:-translate-y-1 hover:border-emerald-700/70">
           <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} pointer-events-none`} />
           <div className="relative space-y-3">
             <h3 className="text-lg md:text-xl font-bold text-white">{card.title}</h3>
@@ -856,7 +856,7 @@ const App = () => {
   const activeItem = navItems.find(i => i.id === activeTab);
 
   return (
-    <div className="fixed inset-0 bg-zinc-950 font-sans text-zinc-100 flex flex-col md:flex-row overflow-hidden selection:bg-emerald-500/30">
+    <div className="fixed inset-0 bg-zinc-950 font-sans text-zinc-100 flex flex-col md:flex-row selection:bg-emerald-500/30">
       
       {/* Mobile Header */}
       <div className="md:hidden bg-zinc-900 border-b border-zinc-800 text-white p-4 flex items-center justify-between z-50">
