@@ -203,12 +203,66 @@ const TERMS = {
 
 const Term = ({ label }) => {
   const text = TERMS[label] || label;
+  const [open, setOpen] = useState(false);
+  const [position, setPosition] = useState({ top: 0, left: 0, width: 240 });
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (!open || !ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const tooltipWidth = Math.min(260, window.innerWidth - 16);
+    const padding = 8;
+    const centerX = rect.left + rect.width / 2;
+    const minCenter = padding + tooltipWidth / 2;
+    const maxCenter = window.innerWidth - padding - tooltipWidth / 2;
+    const clampedCenter = Math.min(maxCenter, Math.max(minCenter, centerX));
+    setPosition({
+      top: rect.bottom + 8,
+      left: clampedCenter,
+      width: tooltipWidth,
+    });
+  }, [open]);
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    };
+    const handleResizeScroll = () => setOpen(false);
+    document.addEventListener('click', handleClick);
+    window.addEventListener('resize', handleResizeScroll);
+    window.addEventListener('scroll', handleResizeScroll, true);
+    return () => {
+      document.removeEventListener('click', handleClick);
+      window.removeEventListener('resize', handleResizeScroll);
+      window.removeEventListener('scroll', handleResizeScroll, true);
+    };
+  }, []);
+
   return (
-    <span className="relative inline-flex items-center group">
+    <span
+      ref={ref}
+      className="relative inline-flex items-center"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+      onClick={(e) => {
+        e.stopPropagation();
+        setOpen((o) => !o);
+      }}
+    >
       <span className="underline decoration-dotted cursor-help">{label}</span>
-      <span className="pointer-events-none absolute left-1/2 -translate-x-1/2 top-full mt-1 whitespace-nowrap text-[11px] bg-black/90 text-white px-2 py-1 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-150 z-[9999]">
-        {text}
-      </span>
+      {open && (
+        <span
+          className="fixed z-[9999] bg-black/90 text-white text-[12px] leading-snug px-3 py-2 rounded shadow-lg pointer-events-none"
+          style={{
+            top: position.top,
+            left: position.left,
+            width: position.width,
+            transform: 'translateX(-50%)',
+          }}
+        >
+          {text}
+        </span>
+      )}
     </span>
   );
 };
@@ -375,7 +429,7 @@ const GameSimulator = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#27272a_0%,_#09090b_100%)] opacity-50"></div>
         
         {/* Header */}
-        <div className="z-10 w-full flex flex-col gap-2 md:flex-row md:items-center md:justify-between text-[11px] md:text-xs font-bold uppercase tracking-widest mb-6 text-zinc-500">
+        <div className="z-10 w-full flex flex-col gap-2 md:flex-row md:items-center md:justify-between text-xs md:text-sm font-bold uppercase tracking-widest mb-6 text-zinc-500">
           <div className="flex flex-wrap items-center gap-2">
           <span className="md:text-sm">{annotateText(currentScenario.difficulty)}</span>
           <span className="text-amber-500 md:text-sm">{progressLabel}</span>
@@ -394,7 +448,7 @@ const GameSimulator = () => {
            {/* Community Cards */}
            <div className="flex gap-2 h-24 items-center">
             {currentStep.board.length === 0 ? (
-               <div className="text-zinc-700 text-[11px] md:text-sm font-mono tracking-widest uppercase">Pre-Flop</div>
+               <div className="text-zinc-700 text-xs md:text-sm font-mono tracking-widest uppercase">Pre-Flop</div>
             ) : (
                currentStep.board.map((card, idx) => (
                  <Card key={idx} rank={card.r} suit={card.s} size="md" className="animate-in zoom-in duration-300" />
@@ -421,7 +475,7 @@ const GameSimulator = () => {
            <div className="flex items-center gap-2">
              <button
                onClick={() => setShowHint(h => !h)}
-               className="text-[11px] md:text-xs border border-blue-900 bg-blue-950/60 text-blue-200 px-2.5 py-1.5 rounded hover:border-blue-700 transition-colors"
+               className="text-xs md:text-sm border border-blue-900 bg-blue-950/60 text-blue-200 px-2.5 py-1.5 rounded hover:border-blue-700 transition-colors"
              >
                {showHint ? 'Hide hint' : 'Hint'}
              </button>
@@ -686,7 +740,7 @@ const DeepDive = () => {
   return (
     <div className="max-w-5xl mx-auto space-y-4 md:space-y-6">
       {cards.map((card, idx) => (
-        <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 md:p-6 shadow-sm relative select-none cursor-default transition-transform duration-200 hover:-translate-y-1 hover:border-emerald-700/70">
+        <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 md:p-6 shadow-sm relative select-none cursor-default transition-transform duration-200 hover:-translate-y-1 active:scale-[0.995] hover:border-emerald-700/70">
           <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} pointer-events-none`} />
           <div className="relative flex flex-col md:flex-row gap-5 md:gap-8">
             <div className="flex-1">
@@ -708,9 +762,9 @@ const DeepDive = () => {
                 ))}
               </div>
               <div className="flex gap-1">
-                {card.board.length ? card.board.map((c, i) => <Card key={i} rank={c.r} suit={c.s} size="xs" />) : <span className="text-[11px] text-zinc-500">Pre-flop</span>}
+                {card.board.length ? card.board.map((c, i) => <Card key={i} rank={c.r} suit={c.s} size="xs" />) : <span className="text-xs text-zinc-500">Pre-flop</span>}
               </div>
-              <div className="text-[11px] md:text-xs text-center text-zinc-300 leading-snug">{card.action}</div>
+              <div className="text-xs md:text-sm text-center text-zinc-300 leading-snug">{card.action}</div>
             </div>
           </div>
         </div>
@@ -725,17 +779,17 @@ const TabIntro = ({ title, items }) => (
   <div className="mb-6 md:mb-8 bg-zinc-900 border border-zinc-800 rounded-xl p-4 md:p-5 text-sm md:text-base text-zinc-200 shadow-sm">
     <div className="flex items-center justify-between mb-3">
       <div className="font-semibold text-white text-base md:text-lg">{title}</div>
-      <span className="text-[11px] md:text-xs text-emerald-400 uppercase tracking-widest border border-emerald-800 bg-emerald-900/30 px-2 py-1 rounded"></span>
+      <span className="text-xs md:text-sm text-emerald-400 uppercase tracking-widest border border-emerald-800 bg-emerald-900/30 px-2 py-1 rounded"></span>
     </div>
     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
       {items.map((item, idx) => (
         <div 
           key={idx} 
-          className="group relative border border-zinc-800 rounded-lg bg-zinc-950/60 p-3 transition-transform duration-200 hover:-translate-y-1 hover:border-emerald-700 select-none cursor-default"
+          className="group relative border border-zinc-800 rounded-lg bg-zinc-950/60 p-3 transition-transform duration-200 hover:-translate-y-1 active:scale-[0.995] hover:border-emerald-700 select-none cursor-default"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           <div className="relative">
-            <div className="text-[11px] text-emerald-300 uppercase tracking-widest font-semibold mb-1">{item.label}</div>
+            <div className="text-xs sm:text-sm text-emerald-300 uppercase tracking-widest font-semibold mb-1">{item.label}</div>
             <div className="text-zinc-200 text-sm leading-relaxed">{item.text}</div>
           </div>
         </div>
@@ -772,13 +826,13 @@ const CheatSheet = () => {
         <div className="grid sm:grid-cols-3 gap-3">
           {handExamples.map((item, idx) => (
             <div key={idx} className="border border-zinc-800 rounded-lg bg-zinc-950/60 p-3 select-none">
-              <div className="text-[11px] text-emerald-300 uppercase tracking-widest font-semibold mb-2">{item.label}</div>
+              <div className="text-xs sm:text-sm text-emerald-300 uppercase tracking-widest font-semibold mb-2">{item.label}</div>
               <div className="flex gap-1 mb-2">
                 {item.hand.map((c, i) => (
                   <Card key={i} rank={c.r} suit={c.s} size="sm" className={i === 0 ? '-rotate-3' : 'rotate-3'} />
                 ))}
               </div>
-              <div className="text-[11px] text-zinc-300 leading-snug">{annotateText(item.note)}</div>
+              <div className="text-xs sm:text-sm text-zinc-300 leading-snug">{annotateText(item.note)}</div>
             </div>
           ))}
         </div>
@@ -799,7 +853,7 @@ const CheatSheet = () => {
   return (
     <div className="max-w-6xl mx-auto space-y-4 md:space-y-6">
       {cards.map((card, idx) => (
-        <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 md:p-5 shadow-sm relative select-none transition-transform duration-200 hover:-translate-y-1 hover:border-emerald-700/70">
+        <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 md:p-5 shadow-sm relative select-none transition-transform duration-200 hover:-translate-y-1 active:scale-[0.995] hover:border-emerald-700/70">
           <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} pointer-events-none`} />
           <div className="relative space-y-3">
             <h3 className="text-lg md:text-xl font-bold text-white">{card.title}</h3>
@@ -828,6 +882,14 @@ const App = () => {
   ];
 
   useEffect(() => { if (mainContentRef.current) mainContentRef.current.scrollTop = 0; }, [activeTab]);
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [mobileMenuOpen]);
 
   const renderContent = () => {
     switch(activeTab) {
