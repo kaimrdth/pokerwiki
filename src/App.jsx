@@ -250,9 +250,8 @@ const Term = ({ label }) => {
   const tooltip = open ? (
     createPortal(
       <>
-        <div className="fixed inset-0 z-[9997]" onClick={() => setOpen(false)} />
         <div
-          className="fixed z-[9998] bg-black/90 text-white text-[12px] leading-snug px-3 py-2 rounded shadow-lg w-[min(320px,90vw)] pointer-events-auto"
+          className="fixed z-[9998] bg-black/90 text-white text-[12px] leading-snug px-3 py-2 rounded shadow-lg w-[min(320px,90vw)] pointer-events-auto relative"
           style={{
             top: position.top,
             left: position.left,
@@ -766,7 +765,7 @@ const DeepDive = () => {
   return (
     <div className="max-w-5xl mx-auto space-y-4 md:space-y-6">
       {cards.map((card, idx) => (
-        <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 md:p-6 shadow-sm relative select-none cursor-default transition-transform duration-200 hover:-translate-y-1 active:scale-[0.995] hover:border-emerald-700/70">
+        <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 md:p-6 shadow-sm relative select-none cursor-default transition-colors duration-200 hover:border-emerald-700/70">
           <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} pointer-events-none`} />
           <div className="relative flex flex-col md:flex-row gap-5 md:gap-8">
             <div className="flex-1">
@@ -811,7 +810,7 @@ const TabIntro = ({ title, items }) => (
       {items.map((item, idx) => (
         <div 
           key={idx} 
-          className="group relative border border-zinc-800 rounded-lg bg-zinc-950/60 p-3 transition-transform duration-200 hover:-translate-y-1 active:scale-[0.995] hover:border-emerald-700 select-none cursor-default"
+          className="group relative border border-zinc-800 rounded-lg bg-zinc-950/60 p-3 transition-colors duration-200 hover:border-emerald-700 select-none cursor-default"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           <div className="relative">
@@ -879,7 +878,7 @@ const CheatSheet = () => {
   return (
     <div className="max-w-6xl mx-auto space-y-4 md:space-y-6 w-full">
       {cards.map((card, idx) => (
-        <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 md:p-5 shadow-sm relative select-none transition-transform duration-200 hover:-translate-y-1 active:scale-[0.995] hover:border-emerald-700/70">
+        <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 md:p-5 shadow-sm relative select-none transition-colors duration-200 hover:border-emerald-700/70">
           <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} pointer-events-none`} />
           <div className="relative space-y-3">
             <h3 className="text-lg md:text-xl font-bold text-white">{card.title}</h3>
