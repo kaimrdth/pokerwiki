@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { Trophy, Users, DollarSign, Activity, Menu, X, Grid } from 'lucide-react';
 
 // --- CONFIGURATION: SCENARIOS ---
@@ -204,65 +205,90 @@ const TERMS = {
 const Term = ({ label }) => {
   const text = TERMS[label] || label;
   const [open, setOpen] = useState(false);
-  const [position, setPosition] = useState({ top: 0, left: 0, width: 240 });
-  const ref = useRef(null);
+  const [position, setPosition] = useState({ top: 0, left: 0, placement: 'bottom', width: 260 });
+  const triggerRef = useRef(null);
+
+  const computePosition = () => {
+    if (!triggerRef.current) return;
+    const rect = triggerRef.current.getBoundingClientRect();
+    const tooltipWidth = Math.min(320, window.innerWidth - 24);
+    const padding = 12;
+    const gap = 10;
+    const prefersTop = rect.top > window.innerHeight / 2;
+    const placement = prefersTop ? 'top' : 'bottom';
+    const rawCenter = rect.left + rect.width / 2;
+    const clampedCenter = Math.min(
+      window.innerWidth - padding - tooltipWidth / 2,
+      Math.max(padding + tooltipWidth / 2, rawCenter)
+    );
+    const top = placement === 'top' ? rect.top - gap : rect.bottom + gap;
+    setPosition({ top, left: clampedCenter, placement, width: tooltipWidth });
+  };
 
   useEffect(() => {
-    if (!open || !ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const tooltipWidth = Math.min(260, window.innerWidth - 16);
-    const padding = 8;
-    const centerX = rect.left + rect.width / 2;
-    const minCenter = padding + tooltipWidth / 2;
-    const maxCenter = window.innerWidth - padding - tooltipWidth / 2;
-    const clampedCenter = Math.min(maxCenter, Math.max(minCenter, centerX));
-    setPosition({
-      top: rect.bottom + 8,
-      left: clampedCenter,
-      width: tooltipWidth,
-    });
+    if (!open) return;
+    computePosition();
   }, [open]);
 
   useEffect(() => {
-    const handleClick = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    const handleClickAway = (e) => {
+      if (triggerRef.current && !triggerRef.current.contains(e.target)) setOpen(false);
     };
-    const handleResizeScroll = () => setOpen(false);
-    document.addEventListener('click', handleClick);
+    const handleResizeScroll = () => {
+      if (open) computePosition();
+    };
+    document.addEventListener('click', handleClickAway);
     window.addEventListener('resize', handleResizeScroll);
     window.addEventListener('scroll', handleResizeScroll, true);
     return () => {
-      document.removeEventListener('click', handleClick);
+      document.removeEventListener('click', handleClickAway);
       window.removeEventListener('resize', handleResizeScroll);
       window.removeEventListener('scroll', handleResizeScroll, true);
     };
-  }, []);
+  }, [open]);
+
+  const tooltip = open ? (
+    createPortal(
+      <>
+        <div className="fixed inset-0 z-[9997]" onClick={() => setOpen(false)} />
+        <div
+          className="fixed z-[9998] bg-black/90 text-white text-[12px] leading-snug px-3 py-2 rounded shadow-lg w-[min(320px,90vw)] pointer-events-auto"
+          style={{
+            top: position.top,
+            left: position.left,
+            transform: 'translateX(-50%)',
+            width: position.width,
+          }}
+        >
+          {text}
+          <span
+            className={`absolute left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 bg-black/90 ${
+              position.placement === 'top' ? 'bottom-[-4px]' : 'top-[-4px]'
+            }`}
+          />
+        </div>
+      </>,
+      document.body
+    )
+  ) : null;
 
   return (
     <span
-      ref={ref}
+      ref={triggerRef}
       className="relative inline-flex items-center"
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
+      onFocus={() => setOpen(true)}
+      onBlur={() => setOpen(false)}
       onClick={(e) => {
         e.stopPropagation();
         setOpen((o) => !o);
       }}
+      role="button"
+      tabIndex={0}
     >
       <span className="underline decoration-dotted cursor-help">{label}</span>
-      {open && (
-        <span
-          className="fixed z-[9999] bg-black/90 text-white text-[12px] leading-snug px-3 py-2 rounded shadow-lg pointer-events-none"
-          style={{
-            top: position.top,
-            left: position.left,
-            width: position.width,
-            transform: 'translateX(-50%)',
-          }}
-        >
-          {text}
-        </span>
-      )}
+      {tooltip}
     </span>
   );
 };
@@ -348,7 +374,7 @@ const TableDiagram = () => {
               ? 'bg-amber-500 text-zinc-900 border-amber-400 scale-110 z-20 shadow-[0_0_15px_rgba(245,158,11,0.4)]' 
               : 'bg-zinc-800 text-zinc-400 border-zinc-700 hover:bg-zinc-700 hover:text-white'}`}
           >
-            <Term label={pos.id} />
+            <span className="underline decoration-dotted">{pos.id}</span>
           </button>
         ))}
       </div>
