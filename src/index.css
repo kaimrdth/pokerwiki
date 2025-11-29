@@ -5,6 +5,9 @@
 @layer base {
   :root {
     font-size: 15px;
+    --bg-deep: #070a11;
+    --bg-edge: #0d1220;
+    --suit-line: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='80' viewBox='0 0 360 80'%3E%3Ctext x='0' y='55' fill='%23e5e7eb' fill-opacity='0.1' font-size='42' font-family='Montserrat,Segoe UI,Arial,sans-serif'%3E%E2%99%A0%C2%A0%C2%A0%E2%99%A5%C2%A0%C2%A0%E2%99%A6%C2%A0%C2%A0%E2%99%A3%C2%A0%C2%A0%E2%99%A0%C2%A0%C2%A0%E2%99%A5%C2%A0%C2%A0%E2%99%A6%C2%A0%C2%A0%E2%99%A3%C2%A0%3C/text%3E%3C/svg%3E");
   }
 
   @media (min-width: 1024px) {
@@ -14,9 +17,23 @@
   }
 
   body {
-    @apply bg-zinc-950 text-zinc-100 antialiased;
+    @apply bg-[var(--bg-deep)] text-zinc-100 antialiased;
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     line-height: 1.6;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-white/5 border border-white/10 backdrop-blur-xl shadow-[0_12px_50px_rgba(0,0,0,0.45)];
+  }
+
+  .glass-subtle {
+    @apply bg-white/5 border border-white/5 backdrop-blur-lg shadow-inner;
+  }
+
+  .pill {
+    @apply bg-white/10 border border-white/20 rounded-full px-3 py-1 text-[11px] uppercase tracking-[0.2em] text-zinc-200;
   }
 }
 
@@ -65,4 +82,40 @@
     transform: scale(1);
     opacity: 1;
   }
+}
+
+.suits-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.suits-row {
+  position: absolute;
+  left: -25%;
+  right: -25%;
+  height: 18%;
+  background-image: var(--suit-line);
+  background-repeat: repeat-x;
+  background-size: 360px 80px;
+  opacity: 0.08;
+  filter: blur(0.2px);
+  animation: suits-left 90s linear infinite;
+}
+
+.suits-row.reverse {
+  animation-name: suits-right;
+  opacity: 0.06;
+}
+
+@keyframes suits-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-20%); }
+}
+
+@keyframes suits-right {
+  from { transform: translateX(0); }
+  to { transform: translateX(20%); }
 }

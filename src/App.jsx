@@ -328,13 +328,13 @@ const HandRankings = () => {
 
   return (
     <div className="max-w-md w-full mx-auto">
-      <div className="bg-zinc-900 border border-zinc-800 rounded-xl shadow-sm">
+      <div className="glass-panel rounded-xl shadow-sm">
         {hands.map((hand, idx) => (
           <div 
             key={idx} 
-            className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-5 py-3 border-b border-zinc-800/50 last:border-0 hover:bg-zinc-800/30 transition-colors"
+            className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-5 py-3 border-b border-white/10 last:border-0 hover:bg-white/5 transition-colors"
           >
-            <span className="text-xs md:text-sm font-bold text-zinc-400 tracking-wider sm:w-40 flex-shrink-0">{hand.title}</span>
+            <span className="text-xs md:text-sm font-bold text-zinc-200 tracking-wider sm:w-40 flex-shrink-0">{hand.title}</span>
             <div className="flex gap-1 flex-wrap">
               {hand.cards.map((c, i) => <Card key={i} rank={c.r} suit={c.s} size="xs" />)}
             </div>
@@ -360,8 +360,8 @@ const TableDiagram = () => {
   return (
     <div className="flex flex-col items-center gap-6 md:gap-8">
       <div className="relative w-full max-w-3xl md:max-w-4xl aspect-[16/10] md:aspect-[21/10] mb-4 md:mb-8 select-none">
-        <div className="absolute inset-4 md:inset-6 bg-emerald-900 rounded-[110px] md:rounded-[140px] border-4 border-zinc-700 shadow-2xl flex items-center justify-center">
-          <div className="text-emerald-950/40 font-bold text-4xl md:text-5xl tracking-widest">TABLE</div>
+        <div className="absolute inset-4 md:inset-6 glass-panel rounded-[110px] md:rounded-[140px] border border-white/10 shadow-2xl flex items-center justify-center">
+          <div className="text-white/10 font-bold text-4xl md:text-5xl tracking-widest">TABLE</div>
         </div>
         {positions.map((pos) => (
           <button
@@ -370,18 +370,18 @@ const TableDiagram = () => {
             style={{ top: pos.top, left: pos.left }}
             className={`absolute -translate-x-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center font-bold text-xs md:text-sm lg:text-base shadow-lg transition-all duration-200 border
             ${selectedPos === pos.id 
-              ? 'bg-amber-500 text-zinc-900 border-amber-400 scale-110 z-20 shadow-[0_0_15px_rgba(245,158,11,0.4)]' 
-              : 'bg-zinc-800 text-zinc-400 border-zinc-700 hover:bg-zinc-700 hover:text-white'}`}
+              ? 'bg-white/80 text-zinc-900 border-white/70 scale-110 z-20 shadow-[0_0_25px_rgba(255,255,255,0.25)]' 
+              : 'bg-white/5 text-zinc-200 border-white/10 hover:bg-white/10'}`}
           >
             <span className="underline decoration-dotted">{pos.id}</span>
           </button>
         ))}
       </div>
       
-      <div className="w-full max-w-2xl bg-zinc-900/50 rounded-lg border-l-4 border-amber-500 p-6 md:p-7 animate-in fade-in slide-in-from-bottom-2">
+      <div className="w-full max-w-2xl glass-panel rounded-lg border-l-4 border-emerald-400/70 p-6 md:p-7 animate-in fade-in slide-in-from-bottom-2">
         <div className="flex justify-between items-baseline mb-2">
           <h3 className="text-xl md:text-2xl font-bold text-white">{currentInfo.name}</h3>
-          <span className="text-amber-500 font-bold text-sm md:text-base">{currentInfo.strategy}</span>
+          <span className="text-emerald-300 font-bold text-sm md:text-base">{currentInfo.strategy}</span>
         </div>
         <p className="text-zinc-300 md:text-base">{annotateText(currentInfo.desc)}</p>
       </div>
@@ -449,7 +449,7 @@ const GameSimulator = () => {
 
   return (
     <div className="flex flex-col gap-6 max-w-2xl mx-auto">
-      <div className="bg-zinc-900 rounded-xl p-6 md:p-8 flex flex-col items-center relative shadow-xl border border-zinc-800 min-h-[400px]">
+      <div className="glass-panel rounded-xl p-6 md:p-8 flex flex-col items-center relative shadow-xl min-h-[400px]">
         
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_#27272a_0%,_#09090b_100%)] opacity-50"></div>
         
@@ -494,22 +494,22 @@ const GameSimulator = () => {
       </div>
 
       {/* Action Box */}
-      <div className="bg-zinc-900 border border-zinc-800 p-6 md:p-8 rounded-xl animate-in fade-in">
+      <div className="glass-panel p-6 md:p-8 rounded-xl animate-in fade-in">
         <div className="flex justify-between items-center mb-4">
            <div className="text-white font-bold text-lg md:text-xl">{annotateText(currentStep.action)}</div>
            <div className="flex items-center gap-2">
              <button
                onClick={() => setShowHint(h => !h)}
-               className="text-xs md:text-sm border border-blue-900 bg-blue-950/60 text-blue-200 px-2.5 py-1.5 rounded hover:border-blue-700 transition-colors"
+               className="text-xs md:text-sm border border-white/10 bg-white/5 text-emerald-100 px-2.5 py-1.5 rounded hover:border-white/20 transition-colors"
              >
                {showHint ? 'Hide hint' : 'Hint'}
              </button>
-             <div className="text-amber-400 font-mono text-xs md:text-sm border border-amber-900 bg-amber-950/60 px-2.5 py-1.5 rounded">What do you do?</div>
+             <div className="text-emerald-200 font-mono text-xs md:text-sm border border-white/10 bg-white/5 px-2.5 py-1.5 rounded">What do you do?</div>
            </div>
         </div>
 
         {showHint && (
-          <div className="mb-4 text-[12px] md:text-sm text-blue-200 bg-blue-950/40 border border-blue-900 rounded-lg px-3 py-2">
+          <div className="mb-4 text-[12px] md:text-sm text-emerald-100 bg-white/5 border border-white/10 rounded-lg px-3 py-2">
             Think about position ({annotateText(currentScenario.position)}), board texture, and whether this board helps you or villain. Compare the price to your outs/pot.
           </div>
         )}
@@ -526,9 +526,9 @@ const GameSimulator = () => {
                 onClick={() => handleChoice(choice)}
                 className={`
                   w-full py-2.5 rounded-lg border text-sm font-semibold transition-all
-                  ${isAnswer ? 'border-emerald-500 bg-emerald-500/10 text-emerald-300 shadow-[0_0_0_1px_rgba(16,185,129,0.35)]' : ''}
-                  ${isSelected && !isAnswer ? 'border-zinc-600 bg-zinc-800 text-white' : ''}
-                  ${!isSelected && !isAnswer ? 'border-zinc-800 bg-zinc-900 text-zinc-300 hover:border-zinc-700 hover:text-white' : ''}
+                  ${isAnswer ? 'border-emerald-300 bg-emerald-300/10 text-emerald-100 shadow-[0_0_0_1px_rgba(52,211,153,0.35)]' : ''}
+                  ${isSelected && !isAnswer ? 'border-white/30 bg-white/10 text-white' : ''}
+                  ${!isSelected && !isAnswer ? 'border-white/10 bg-white/5 text-zinc-200 hover:border-white/20 hover:text-white' : ''}
                 `}
                 disabled={showResult}
               >
@@ -541,10 +541,10 @@ const GameSimulator = () => {
         {showResult && (
             <div className="space-y-2 mb-4">
               <div className={`px-3 py-2 rounded-lg border text-sm font-semibold inline-flex items-center gap-2
-                ${isCorrect ? 'border-emerald-700 bg-emerald-900/40 text-emerald-200' : 'border-red-700 bg-red-900/30 text-red-200'}`}>
+                ${isCorrect ? 'border-emerald-300 bg-emerald-300/10 text-emerald-100' : 'border-red-300 bg-red-300/10 text-red-100'}`}>
                 {isCorrect ? 'Nice. That matches the recommended line.' : `Correct action: ${correctAction}`}
               </div>
-              <div className="px-3 py-2 rounded-lg border border-zinc-800 bg-zinc-900 text-[12px] md:text-sm text-zinc-200">
+              <div className="px-3 py-2 rounded-lg border border-white/10 bg-white/5 text-[12px] md:text-sm text-zinc-100">
               Why: {annotateText(currentStep.lesson)}
               </div>
             </div>
@@ -556,7 +556,7 @@ const GameSimulator = () => {
           className={`w-full py-3.5 rounded-lg font-bold text-sm md:text-base transition-colors
             ${isLastStep 
               ? 'bg-amber-500 text-zinc-950 hover:bg-amber-400 disabled:bg-amber-900 disabled:text-amber-200' 
-              : 'bg-zinc-100 text-zinc-950 hover:bg-white disabled:bg-zinc-800 disabled:text-zinc-500'}`}
+              : 'bg-white text-zinc-950 hover:bg-zinc-100 disabled:bg-white/20 disabled:text-white/60'}`}
         >
           {isLastStep ? 'Next Scenario' : 'Next Action'}
         </button>
@@ -619,8 +619,8 @@ const AdvancedGTO = () => {
             onClick={() => setSelectedRange(pos)}
             className={`px-4 py-2 rounded font-bold text-xs md:text-sm transition-all border ${
               selectedRange === pos 
-                ? 'bg-indigo-600 text-white border-indigo-500' 
-                : 'bg-zinc-900 text-zinc-500 border-zinc-800 hover:text-zinc-300'
+                ? 'bg-white/15 text-white border-white/30 shadow-[0_8px_30px_rgba(0,0,0,0.35)]' 
+                : 'bg-white/5 text-zinc-200 border-white/10 hover:text-white hover:border-white/20'
             }`}
           >
             {pos}
@@ -628,8 +628,8 @@ const AdvancedGTO = () => {
         ))}
       </div>
 
-      <div className="bg-zinc-900 p-3 md:p-5 rounded-lg border border-zinc-800 mx-auto w-fit overflow-auto">
-          <div className="grid grid-cols-[repeat(13,minmax(0,1fr))] gap-px bg-zinc-800 border border-zinc-800">
+      <div className="glass-panel p-3 md:p-5 rounded-lg mx-auto w-fit overflow-auto">
+          <div className="grid grid-cols-[repeat(13,minmax(0,1fr))] gap-px bg-white/10 border border-white/10">
              {RANKS.map((rowRank, rIndex) => (
                 RANKS.map((colRank, cIndex) => {
                   const label = getHandLabel(rIndex, cIndex);
@@ -643,7 +643,7 @@ const AdvancedGTO = () => {
                       onMouseLeave={() => setHoveredHand(null)}
                       className={`
                         w-7 h-7 sm:w-9 sm:h-9 md:w-12 md:h-12 flex items-center justify-center text-[8px] sm:text-[10px] md:text-[12px] font-semibold cursor-default transition-all
-                        border border-zinc-800
+                        border border-white/10
                         ${dominant === 'raise' ? 'text-white shadow-[0_0_0_1px_rgba(34,197,94,0.35)]' : ''}
                         ${dominant === 'call' ? 'text-white shadow-[0_0_0_1px_rgba(59,130,246,0.3)]' : ''}
                         ${dominant === 'fold' ? 'text-zinc-500' : ''}
@@ -661,7 +661,7 @@ const AdvancedGTO = () => {
       <div className="flex items-center justify-center gap-4 text-xs md:text-sm text-zinc-400">
         <span className="inline-flex items-center gap-1"><span className="w-3 h-3 rounded-sm bg-emerald-500" /> Raise</span>
         <span className="inline-flex items-center gap-1"><span className="w-3 h-3 rounded-sm bg-blue-500" /> Call</span>
-        <span className="inline-flex items-center gap-1"><span className="w-3 h-3 rounded-sm bg-zinc-800 border border-zinc-700" /> Fold</span>
+        <span className="inline-flex items-center gap-1"><span className="w-3 h-3 rounded-sm bg-white/10 border border-white/20" /> Fold</span>
       </div>
 
       <div className="h-10 md:h-12 text-center">
@@ -681,7 +681,7 @@ const AdvancedGTO = () => {
 };
 
 const BettingActions = () => (
-  <div className="max-w-2xl mx-auto bg-zinc-900 border border-zinc-800 rounded-xl divide-y divide-zinc-800">
+  <div className="max-w-2xl mx-auto glass-panel rounded-xl divide-y divide-white/10">
     {[
       { label: 'CHECK', color: 'bg-zinc-500', desc: "Pass action to next player. Allowed if no bets placed." },
       { label: 'BET', color: 'bg-emerald-500', desc: "First to put money in the pot this round." },
@@ -689,7 +689,7 @@ const BettingActions = () => (
       { label: 'RAISE', color: 'bg-orange-500', desc: "Increase the current bet, forcing others to pay more." },
       { label: 'FOLD', color: 'bg-red-500', desc: "Discard hand and forfeit pot." }
     ].map((action, idx) => (
-      <div key={idx} className="flex items-center p-3 md:p-3.5 hover:bg-zinc-800/30 transition-colors">
+      <div key={idx} className="flex items-center p-3 md:p-3.5 hover:bg-white/5 transition-colors">
         <div className="w-24 flex-shrink-0 flex items-center gap-2">
           <div className={`w-1.5 h-1.5 rounded-full ${action.color}`}></div>
           <span className="text-xs md:text-sm font-bold text-zinc-300 tracking-wider">{action.label}</span>
@@ -765,7 +765,7 @@ const DeepDive = () => {
   return (
     <div className="max-w-5xl mx-auto space-y-4 md:space-y-6">
       {cards.map((card, idx) => (
-        <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 md:p-6 shadow-sm relative select-none cursor-default transition-colors duration-200 hover:border-emerald-700/70">
+        <div key={idx} className="glass-panel rounded-xl p-5 md:p-6 shadow-sm relative select-none cursor-default transition-colors duration-200 hover:border-white/20">
           <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} pointer-events-none`} />
           <div className="relative flex flex-col md:flex-row gap-5 md:gap-8">
             <div className="flex-1">
@@ -780,14 +780,14 @@ const DeepDive = () => {
                 ))}
               </div>
             </div>
-            <div className="flex-shrink-0 flex flex-col items-center gap-3 bg-zinc-950/70 border border-zinc-800 rounded-lg p-3 md:p-4 shadow-inner w-full md:w-64">
+            <div className="flex-shrink-0 flex flex-col items-center gap-3 glass-subtle rounded-lg p-3 md:p-4 shadow-inner w-full md:w-64">
               <div className="flex gap-1">
                 {card.hand.map((c, i) => (
                   <Card key={i} rank={c.r} suit={c.s} size="sm" className={i === 0 ? '-rotate-3' : 'rotate-3'} />
                 ))}
               </div>
               <div className="flex gap-1">
-                {card.board.length ? card.board.map((c, i) => <Card key={i} rank={c.r} suit={c.s} size="xs" />) : <span className="text-xs text-zinc-500">Pre-flop</span>}
+                {card.board.length ? card.board.map((c, i) => <Card key={i} rank={c.r} suit={c.s} size="xs" />) : <span className="text-xs text-zinc-400">Pre-flop</span>}
               </div>
               <div className="text-xs md:text-sm text-center text-zinc-300 leading-snug">{card.action}</div>
             </div>
@@ -798,19 +798,35 @@ const DeepDive = () => {
   );
 };
 
+const SuitsBackdrop = () => (
+  <div className="suits-backdrop">
+    {[0, 1, 2, 3].map((row) => (
+      <div
+        key={row}
+        className={`suits-row ${row % 2 ? 'reverse' : ''}`}
+        style={{
+          top: `${6 + row * 22}%`,
+          animationDelay: `${row * 8}s`,
+          opacity: row % 2 ? 0.06 : 0.08,
+        }}
+      />
+    ))}
+  </div>
+);
+
 // --- Main App Shell ---
 
 const TabIntro = ({ title, items }) => (
-  <div className="mb-6 md:mb-8 bg-zinc-900 border border-zinc-800 rounded-xl p-4 md:p-5 text-sm md:text-base text-zinc-200 shadow-sm">
+  <div className="mb-6 md:mb-8 glass-panel rounded-xl p-4 md:p-5 text-sm md:text-base text-zinc-200 shadow-sm">
     <div className="flex items-center justify-between mb-3">
       <div className="font-semibold text-white text-base md:text-lg">{title}</div>
-      <span className="text-xs md:text-sm text-emerald-400 uppercase tracking-widest border border-emerald-800 bg-emerald-900/30 px-2 py-1 rounded"></span>
+      <span className="text-xs md:text-sm text-emerald-200 uppercase tracking-widest border border-white/10 bg-white/5 px-2 py-1 rounded"></span>
     </div>
     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
       {items.map((item, idx) => (
         <div 
           key={idx} 
-          className="group relative border border-zinc-800 rounded-lg bg-zinc-950/60 p-3 transition-colors duration-200 hover:border-emerald-700 select-none cursor-default"
+          className="group relative glass-subtle rounded-lg p-3 transition-colors duration-200 hover:border-white/20 select-none cursor-default"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
           <div className="relative">
@@ -850,7 +866,7 @@ const CheatSheet = () => {
       visual: (
         <div className="grid sm:grid-cols-3 gap-3">
           {handExamples.map((item, idx) => (
-            <div key={idx} className="border border-zinc-800 rounded-lg bg-zinc-950/60 p-3 select-none">
+            <div key={idx} className="glass-subtle rounded-lg p-3 select-none">
               <div className="text-xs sm:text-sm text-emerald-300 uppercase tracking-widest font-semibold mb-2">{item.label}</div>
               <div className="flex gap-1 mb-2">
                 {item.hand.map((c, i) => (
@@ -878,14 +894,14 @@ const CheatSheet = () => {
   return (
     <div className="max-w-6xl mx-auto space-y-4 md:space-y-6 w-full">
       {cards.map((card, idx) => (
-        <div key={idx} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 md:p-5 shadow-sm relative select-none transition-colors duration-200 hover:border-emerald-700/70">
+        <div key={idx} className="glass-panel rounded-xl p-4 md:p-5 shadow-sm relative select-none transition-colors duration-200 hover:border-white/20">
           <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} pointer-events-none`} />
           <div className="relative space-y-3">
             <h3 className="text-lg md:text-xl font-bold text-white">{card.title}</h3>
             <ul className="space-y-1 text-zinc-200 text-sm md:text-base list-disc list-inside">
               {card.bullets.map((b, i) => <li key={i}>{b}</li>)}
             </ul>
-            <div className="bg-zinc-950/60 border border-zinc-800 rounded-lg p-3 md:p-4">
+            <div className="glass-subtle rounded-lg p-3 md:p-4">
               {card.visual}
             </div>
           </div>
@@ -943,65 +959,70 @@ const App = () => {
   const activeItem = navItems.find(i => i.id === activeTab);
 
   return (
-    <div className="fixed inset-0 bg-zinc-950 font-sans text-zinc-100 flex flex-col md:flex-row selection:bg-emerald-500/30 overflow-x-hidden">
-      
-      {/* Mobile Header */}
-      <div className="md:hidden bg-zinc-900 border-b border-zinc-800 text-white p-4 flex items-center justify-between z-50">
-        <button onClick={() => setMobileMenuOpen(true)} className="text-zinc-400"><Menu size={24} /></button>
-        <div className="font-bold flex items-center gap-2">♠ Wiki</div>
-        <div className="w-6" /> {/* spacer for symmetry */}
-      </div>
+    <div className="fixed inset-0 overflow-hidden bg-[radial-gradient(circle_at_20%_20%,rgba(52,211,153,0.12),transparent_36%),radial-gradient(circle_at_82%_0%,rgba(59,130,246,0.12),transparent_40%),radial-gradient(circle_at_16%_78%,rgba(244,187,74,0.08),transparent_38%)] text-zinc-100 font-sans">
+      <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg-deep)] via-[var(--bg-edge)] to-[#0b1020] opacity-95" />
+      <SuitsBackdrop />
 
-      {/* Sidebar */}
-      <div className={`
-        fixed inset-y-0 left-0 w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col transition-transform duration-300 z-50
-        ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
-      `}>
-        <div className="p-8 font-bold text-xl text-white hidden md:flex items-center gap-2 tracking-tight">
-          <div className="w-6 h-6 bg-gradient-to-br from-emerald-500 to-emerald-700 rounded flex items-center justify-center text-sm shadow-lg">♠</div>
-          Poker Wiki
-        </div>
+      <div className="relative z-10 flex flex-col md:flex-row h-full selection:bg-emerald-500/30 overflow-x-hidden">
         
-        <div className="flex md:hidden justify-between items-center p-6 border-b border-zinc-800">
-           <span className="font-bold text-white text-lg">Menu</span>
-           <button onClick={() => setMobileMenuOpen(false)}><X size={24}/></button>
+        {/* Mobile Header */}
+        <div className="md:hidden glass-panel text-white p-4 flex items-center justify-between z-50 rounded-none border-0 border-b border-white/10">
+          <button onClick={() => setMobileMenuOpen(true)} className="text-zinc-300"><Menu size={24} /></button>
+          <div className="font-bold flex items-center gap-2">♠ Wiki</div>
+          <div className="w-6" /> {/* spacer for symmetry */}
         </div>
 
-        <nav className="flex-1 p-4 space-y-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = activeTab === item.id;
-            return (
-              <button
-                key={item.id}
-                onClick={() => { setActiveTab(item.id); setMobileMenuOpen(false); }}
-                className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-lg transition-all text-left text-sm md:text-base font-medium ${
-                  isActive ? 'bg-zinc-800 text-white shadow-sm' : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50'
-                }`}
-              >
-                <Icon size={18} className={isActive ? 'text-emerald-400' : 'opacity-70'} />
-                {item.label}
-              </button>
-            );
-          })}
-        </nav>
-      </div>
-
-      {/* Main Content */}
-      <main ref={mainContentRef} className="flex-1 overflow-y-auto overflow-x-hidden w-full bg-zinc-950 scroll-smooth md:ml-64">
-        <div className="p-6 md:p-12 max-w-6xl mx-auto w-full min-h-full flex flex-col">
-          <header className="mb-10">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">{activeItem?.label}</h1>
-            <div className="h-1 w-12 bg-emerald-500 rounded-full opacity-70"></div>
-          </header>
-
-          <div className="flex-1">
-            {renderContent()}
+        {/* Sidebar */}
+        <div className={`
+          fixed inset-y-0 left-0 w-64 glass-panel backdrop-blur-2xl border-r border-white/10 flex flex-col transition-transform duration-300 z-50
+          ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+        `}>
+          <div className="p-8 font-bold text-xl text-white hidden md:flex items-center gap-2 tracking-tight">
+            <div className="w-6 h-6 bg-gradient-to-br from-emerald-500 to-emerald-700 rounded flex items-center justify-center text-sm shadow-lg">♠</div>
+            Poker Wiki
           </div>
+          
+          <div className="flex md:hidden justify-between items-center p-6 border-b border-white/10">
+             <span className="font-bold text-white text-lg">Menu</span>
+             <button onClick={() => setMobileMenuOpen(false)}><X size={24}/></button>
+          </div>
+
+          <nav className="flex-1 p-4 space-y-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => { setActiveTab(item.id); setMobileMenuOpen(false); }}
+                  className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-lg transition-all text-left text-sm md:text-base font-medium ${
+                    isActive ? 'bg-white/10 text-white shadow-[0_8px_30px_rgba(0,0,0,0.45)]' : 'text-zinc-300 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  <Icon size={18} className={isActive ? 'text-emerald-300' : 'opacity-70'} />
+                  {item.label}
+                </button>
+              );
+            })}
+          </nav>
         </div>
-      </main>
-      
-      {mobileMenuOpen && <div className="fixed inset-0 bg-black/80 z-40 md:hidden" onClick={() => setMobileMenuOpen(false)} />}
+
+        {/* Main Content */}
+        <main ref={mainContentRef} className="flex-1 overflow-y-auto overflow-x-hidden w-full scroll-smooth md:ml-64 relative backdrop-blur-[2px]">
+          <div className="p-6 md:p-12 max-w-6xl mx-auto w-full min-h-full flex flex-col">
+            <header className="mb-10">
+              <h1 className="text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">{activeItem?.label}</h1>
+              <div className="h-1 w-12 bg-emerald-500 rounded-full opacity-70"></div>
+            </header>
+
+            <div className="flex-1">
+              {renderContent()}
+            </div>
+          </div>
+        </main>
+        
+        {mobileMenuOpen && <div className="fixed inset-0 bg-black/70 z-40 md:hidden backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />}
+      </div>
     </div>
   );
 };
