@@ -689,12 +689,12 @@ const BettingActions = () => (
       { label: 'RAISE', color: 'bg-orange-500', desc: "Increase the current bet, forcing others to pay more." },
       { label: 'FOLD', color: 'bg-red-500', desc: "Discard hand and forfeit pot." }
     ].map((action, idx) => (
-      <div key={idx} className="flex items-center p-3 md:p-3.5 hover:bg-white/5 transition-colors">
+      <div key={idx} className="veil-row flex items-center p-3 md:p-3.5 transition-colors">
         <div className="w-24 flex-shrink-0 flex items-center gap-2">
           <div className={`w-1.5 h-1.5 rounded-full ${action.color}`}></div>
           <span className="text-xs md:text-sm font-bold text-zinc-300 tracking-wider">{action.label}</span>
         </div>
-        <div className="text-xs md:text-sm text-zinc-400">{action.desc}</div>
+        <div className="text-xs md:text-sm text-zinc-200">{action.desc}</div>
       </div>
     ))}
   </div>
