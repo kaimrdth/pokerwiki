@@ -152,7 +152,7 @@ const Card = ({ rank, suit, size = 'md', isHidden = false, className = '' }) => 
   }
 
   return (
-    <div className={`${sizeClasses[size]} ${className} bg-zinc-100 border border-zinc-300 shadow-sm flex flex-col justify-between p-0.5 select-none relative`}>
+    <div className={`${sizeClasses[size]} ${className} bg-white/75 border border-white/40 shadow-sm flex flex-col justify-between p-0.5 select-none relative`}>
       <div className={`leading-none ${isRed ? 'text-red-700' : 'text-zinc-900'} ${textSizes[size]} pl-0.5 pt-0.5`}>{rank}</div>
       <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 ${isRed ? 'text-red-700' : 'text-zinc-900'} ${centerSizes[size]}`}>{suit}</div>
       {/* Hide bottom rank for XS to reduce clutter */}
@@ -332,7 +332,7 @@ const HandRankings = () => {
         {hands.map((hand, idx) => (
           <div 
             key={idx} 
-            className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-5 py-3 border-b border-white/10 last:border-0 hover:bg-white/5 transition-colors"
+            className="veil-row flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-5 py-3 border-b border-white/10 last:border-0"
           >
             <span className="text-xs md:text-sm font-bold text-zinc-200 tracking-wider sm:w-40 flex-shrink-0">{hand.title}</span>
             <div className="flex gap-1 flex-wrap">
@@ -360,8 +360,8 @@ const TableDiagram = () => {
   return (
     <div className="flex flex-col items-center gap-6 md:gap-8">
       <div className="relative w-full max-w-3xl md:max-w-4xl aspect-[16/10] md:aspect-[21/10] mb-4 md:mb-8 select-none">
-        <div className="absolute inset-4 md:inset-6 glass-panel rounded-[110px] md:rounded-[140px] border border-white/10 shadow-2xl flex items-center justify-center">
-          <div className="text-white/10 font-bold text-4xl md:text-5xl tracking-widest">TABLE</div>
+        <div className="absolute inset-4 md:inset-6 glass-panel rounded-[110px] md:rounded-[140px] border border-emerald-400/25 shadow-2xl flex items-center justify-center bg-[radial-gradient(circle_at_center,rgba(52,211,153,0.16),rgba(8,12,18,0.92))]">
+          <div className="text-emerald-200/15 font-bold text-4xl md:text-5xl tracking-widest">TABLE</div>
         </div>
         {positions.map((pos) => (
           <button
@@ -370,10 +370,10 @@ const TableDiagram = () => {
             style={{ top: pos.top, left: pos.left }}
             className={`absolute -translate-x-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center font-bold text-xs md:text-sm lg:text-base shadow-lg transition-all duration-200 border
             ${selectedPos === pos.id 
-              ? 'bg-white/80 text-zinc-900 border-white/70 scale-110 z-20 shadow-[0_0_25px_rgba(255,255,255,0.25)]' 
-              : 'bg-white/5 text-zinc-200 border-white/10 hover:bg-white/10'}`}
+              ? 'bg-emerald-400 text-emerald-950 border-emerald-200 scale-110 z-20 shadow-[0_0_25px_rgba(52,211,153,0.35)]' 
+              : 'bg-emerald-500/12 text-emerald-100 border-emerald-300/25 hover:bg-emerald-400/20 hover:text-white'}`}
           >
-            <span className="underline decoration-dotted">{pos.id}</span>
+            <span>{pos.id}</span>
           </button>
         ))}
       </div>
@@ -704,7 +704,7 @@ const DeepDive = () => {
   const cards = [
     {
       title: 'What is EV?',
-      gradient: 'from-amber-500/15 via-amber-500/5 to-amber-900/10',
+      gradient: 'from-white/8 via-white/4 to-white/0',
       body: 'EV (expected value) is the average profit of a play. Compare the price you pay to the chance you win.',
       bullets: [],
       quick: [
@@ -719,7 +719,7 @@ const DeepDive = () => {
     },
     {
       title: 'Estimating Percentages',
-      gradient: 'from-indigo-500/15 via-indigo-500/5 to-indigo-900/10',
+      gradient: 'from-white/8 via-white/4 to-white/0',
       body: 'Use fast rules of thumb to spot good or bad calls.',
       bullets: [],
       quick: [
