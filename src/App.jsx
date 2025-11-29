@@ -816,29 +816,6 @@ const SuitsBackdrop = () => (
 
 // --- Main App Shell ---
 
-const TabIntro = ({ title, items }) => (
-  <div className="mb-6 md:mb-8 glass-panel rounded-xl p-4 md:p-5 text-sm md:text-base text-zinc-200 shadow-sm">
-    <div className="flex items-center justify-between mb-3">
-      <div className="font-semibold text-white text-base md:text-lg">{title}</div>
-      <span className="text-xs md:text-sm text-emerald-200 uppercase tracking-widest border border-white/10 bg-white/5 px-2 py-1 rounded"></span>
-    </div>
-    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-      {items.map((item, idx) => (
-        <div 
-          key={idx} 
-          className="group relative glass-subtle rounded-lg p-3 transition-colors duration-200 hover:border-white/20 select-none cursor-default"
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-          <div className="relative">
-            <div className="text-xs sm:text-sm text-emerald-300 uppercase tracking-widest font-semibold mb-1">{item.label}</div>
-            <div className="text-zinc-200 text-sm leading-relaxed">{item.text}</div>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
 const CheatSheet = () => {
   const handExamples = [
     { label: 'Trash', hand: [{r:'8',s:'♠'}, {r:'3',s:'♦'}], note: 'Fold: off-suit, far apart, weak kicker' },
@@ -939,14 +916,6 @@ const App = () => {
       case 'positions':
         return (
           <>
-            <TabIntro
-              title="Position quick rules"
-              items={[
-                { label: 'Early = tight', text: 'UTG/MP: premiums and solid suited Ax; skip junk and weak offsuit gappers.' },
-                { label: 'Late = attack', text: 'CO/BTN: widen steals with suited/connected hands; isolate limpers.' },
-                { label: 'Blinds = discipline', text: 'Defend suited/connected vs. small opens; be fit-or-fold post-flop.' },
-              ]}
-            />
             <TableDiagram />
           </>
         );
